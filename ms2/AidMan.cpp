@@ -9,77 +9,149 @@ Date of completion      : 10 November 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
 
-#include "AidMan.h"
-#include "Date.h"
 #include <iostream>
+#include "Date.h"
+#include "AidMan.h"
+
+using namespace std;
 namespace sdds
 {
-    AidMan::AidMan() : Menu(7, "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n0- Exit")
+
+    // The AidMan has only one default constructor that initializes the main menu with 7 for the number of optionsand the following text as the menu content
+    AidMan::AidMan()
     {
-        m_filename = nullptr;
+        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
+        m = 7;
+        Menu::set(m.getMenuContent(), 7);
+        fileName = nullptr;
     }
 
-    unsigned int AidMan::menu()
+    AidMan::AidMan(std::nullptr_t)
     {
-        Date a;
-        std::cout << "Aid Management System Version 0.1" << std::endl;
-        std::cout << "Date: ";
-        std::cout << a << std::endl;
-        std::cout << "Data file: ";
-        if (!m_filename)
-            std::cout << "No file" << std::endl;
-        else
-            std::cout << m_filename << std::endl;
-        std::cout << "---------------------------------" << std::endl;
-        unsigned int i = Menu::run();
-        return i;
+        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
+        m = 7;
+        Menu::set(m.getMenuContent(), 7);
+        fileName = nullptr;
     }
+
+    AidMan::AidMan(const char *fileName)
+    {
+        this->fileName = new char[strlen(fileName) + 1];
+        strcpy(this->fileName, fileName);
+        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
+        m = 7;
+        Menu::set(m.getMenuContent(), 7);
+    }
+
+    void AidMan::set(const char *fileName)
+    {
+        delete[] this->fileName;
+        Utils::alocpy(this->fileName, fileName);
+        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
+        m = 7;
+        Menu::set(m.getMenuContent(), 7);
+    }
+
+    // An AidMan object can neither be copied nor assigned to another AinMan object.
+    // When going out of scope the destructor makes sure there is no memory leak.
+    AidMan::AidMan(const AidMan &a)
+    {
+        if (fileName != nullptr)
+        {
+            this->set(a.fileName);
+        }
+        else
+            this->fileName = nullptr;
+    }
+
+    AidMan &AidMan::operator=(const AidMan &a)
+    {
+        if (this != &a)
+        {
+            this->set(a.fileName);
+        }
+        else
+            this->fileName = nullptr;
+        return *this;
+    }
+
     AidMan::~AidMan()
     {
-        delete[] m_filename;
-    }
-    AidMan::AidMan(const char *filename) : Menu(7, "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t")
-    {
-        m_filename = new char[strlen(filename) + 1];
-        strcpy(m_filename, filename);
+        delete[] this->fileName;
+        this->fileName = nullptr;
     }
 
+    // This function receives nothingand returns an unsigned integer that is the user's selection of an option in the main menu of the system.
+    // The menu function will not change the state of the AidMan class.
+    // The Menu will first print the title of the application, current dateand the data file name.
+    // If the filename attribute is null, it will print "No file" instead of the file name.
+    // Then it will run the main menu and return the selection made by the user.
+    unsigned int AidMan::menu()
+    {
+        unsigned int option;
+        Date D;
+
+        cout << "Aid Management System" << endl;
+        cout << "Date: " << D << endl;
+        if (fileName == nullptr)
+        {
+            cout << "Data file: No file" << endl;
+        }
+        else
+        {
+            cout << "Data file: " << fileName << endl;
+        }
+        cout << "---------------------------------" << endl;
+        option = Menu::run();
+
+        return option;
+    }
+
+    // run() receivesand returns nothingand runs the whole application.
+    // In a loop, the run function will keep displaying the menu by calling the menu() functionand awaits the user's entry. Then after each selection, based on the user's entry, it will execute the task chosen from the menu.
     void AidMan::run()
     {
-        bool flag = true;
-        unsigned int i;
+        int option;
+
         do
         {
-            i = menu();
-            switch (i)
+            option = menu();
+
+            switch (option)
             {
+            case 0:
+                cout << "Exiting Program!" << endl;
+                break;
             case 1:
-                std::cout << "\n****List Items****\n\n";
+                cout << endl;
+                cout << "****List Items****" << endl;
                 break;
             case 2:
-                std::cout << "\n****Add Item****\n\n";
+                cout << endl;
+                cout << "****Add Item****" << endl;
                 break;
             case 3:
-                std::cout << "\n****Remove Item****\n\n";
+                cout << endl;
+                cout << "****Remove Item****" << endl;
                 break;
             case 4:
-                std::cout << "\n****Update Quantity****\n\n";
+                cout << endl;
+                cout << "****Update Quantity****" << endl;
                 break;
             case 5:
-                std::cout << "\n****Sort****\n\n";
+                cout << endl;
+                cout << "****Sort****" << endl;
                 break;
             case 6:
-                std::cout << "\n****Ship Items****\n\n";
+                cout << endl;
+                cout << "****Ship Items****" << endl;
                 break;
             case 7:
-                std::cout << "\n****New/Open Aid Database****\n\n";
-                break;
-            case 0:
-                std::cout << "Exiting Program!\n\n";
-                flag = false;
+                cout << endl;
+                cout << "****New/Open Aid Database****" << endl;
                 break;
             }
-        } while (flag);
+            cout << endl;
+        } while (option);
     }
-
 }

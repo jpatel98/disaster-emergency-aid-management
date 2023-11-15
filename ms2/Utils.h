@@ -23,7 +23,7 @@ namespace sdds
       void getSystemDate(int *year = nullptr, int *mon = nullptr, int *day = nullptr);
       int daysOfMon(int mon, int year) const;
       void testMode(bool testmode = true);
-      void allocpy(char *&destination, const char *source);
+      void alocpy(char *&destination, const char *source);
       int getint(const char *prompt = nullptr);
       int getint(int min, int max, const char *prompt = nullptr, const char *errMes = nullptr);
    };

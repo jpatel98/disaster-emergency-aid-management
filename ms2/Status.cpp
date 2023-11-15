@@ -9,107 +9,132 @@ Date of completion      : 1 November 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
 
-#include "Status.h"
 #include <iostream>
-#include <cstring>
-#include <string>
+#include "Status.h"
+
 using namespace std;
+
 namespace sdds
 {
-    Status::Status()
+
+    void Status::setEmpty()
     {
-        Desc = nullptr;
-        Code = 0;
+        this->desc = nullptr;
+        this->code = 0;
     }
 
-    Status::Status(const char *desc)
+    /*A Status object can be constructed with or without a CString as a description.
+    If the description is provided, a dynamic copy of it will be kept in the class description.
+    If the description is not provided, the class description will be set to null.
+    In both cases the Code will be zero.*/
+    Status::Status()
+    {
+        setEmpty();
+    }
+
+    Status::Status(const char *desc, int code)
     {
         if (desc != nullptr)
         {
-            Desc = new char[strlen(desc) + 1];
-            strcpy(Desc, desc);
-            Code = 0;
+            this->setEmpty();
+            this->set(desc, code);
         }
         else
-        {
-            Desc = nullptr;
-            Code = 0;
-        }
+            setEmpty();
     }
 
-    Status::Status(const Status &sts)
+    void Status::set(const char *desc, int code)
     {
-        if (sts.Desc != nullptr)
+        delete[] this->desc;
+
+        if (desc != nullptr)
         {
-            Desc = new char[strlen(sts.Desc) + 1];
-            strcpy(Desc, sts.Desc);
-            Code = sts.Code;
+            Utils::alocpy(this->desc, desc);
+            this->code = code;
         }
         else
-        {
-            Desc = nullptr;
-            Code = sts.Code;
-        }
+            setEmpty();
+    }
+
+    Status::Status(const Status &s)
+    {
+        this->setEmpty();
+        this->set(s.desc, s.code);
+    }
+
+    Status &Status::operator=(const Status &s)
+    {
+        if (&s != this)
+            this->set(s.desc, s.code);
+        return *this;
+    }
+
+    Status::~Status()
+    {
+        delete[] this->desc;
+        this->desc = nullptr;
+    }
+
+    // Assignment operator overloads
+    // A Status object should be able to be assigned to an integer or a CString.
+    // The results of the assignments should set the code or the description dynamically(with no memory leak).
+    Status &Status::operator=(int code)
+    {
+        this->code = code;
+        return *this;
     }
 
     Status &Status::operator=(const char *desc)
     {
-        if (desc != nullptr)
-        {
-            delete[] Desc;
-            Desc = new char[strlen(desc) + 1];
-            strcpy(Desc, desc);
-        }
+        delete[] this->desc;
+        Utils::alocpy(this->desc, desc);
         return *this;
     }
 
-    Status &Status::operator=(int code)
-    {
-        Code = code;
-        return *this;
-    }
-
+    // Casting a Status object to an integer should return the code
     Status::operator int() const
     {
-        return Code;
+        return this->code;
     }
 
-    Status::operator bool() const
-    {
-        if (Desc == nullptr)
-            return true;
-        else
-            return false;
-    }
-
+    // Casting a Status object to a constant character pointer should return the description.
     Status::operator const char *() const
     {
-        return Desc;
+        return this->desc;
     }
 
+    // Casting a Status object to a boolean should return true if the description is null and false if it is not.
+    // Which means if the Status has no description, the owner class is in a valid state. (No news is good news.)
+    Status::operator bool() const
+    {
+        return (this->desc == nullptr) ? true : false;
+    }
+
+    // Create a method called clear() that safely deallocates the descriptionand sets the code to zero.This method will return a reference to the current object at the end.
     Status &Status::clear()
     {
-        delete[] Desc;
-        Desc = nullptr;
-        Code = 0;
+        delete[] this->desc;
+        this->desc = nullptr;
+        this->code = 0;
+
         return *this;
     }
 
-    ostream &operator<<(ostream &ostr, const Status &status)
+    // Overload the insertion operator to be able to print a Status object using ostream.
+    // This operator overload should print the Status only if it is in an invalid state.
+    // When printing the status object the code is printed only if it is not zero as follows `"ERR# ? ? ? : " where ??? replaced with the code.
+    // Then the description of the Status object is printed.
+    ostream &operator<<(std::ostream &ostr, const Status &s)
     {
-        if (!status)
+        int code = s.operator int();
+
+        if (!s)
         {
-            if (status.Code == 0)
-                ostr << status.Desc;
-            else
-                ostr << "ERR#" << status.Code << ": " << status.Desc;
+            if (code != 0)
+                ostr << "ERR#" << code << ": ";
+            ostr << s.operator const char *();
         }
         return ostr;
-    }
-    Status::~Status()
-    {
-        delete[] Desc;
-        Desc = nullptr;
     }
 
 }

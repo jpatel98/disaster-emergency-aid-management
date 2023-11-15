@@ -9,31 +9,36 @@ Date of completion      : 1 November 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
 
-#ifndef STATUS_H
-#define STATUS_H
-#include <iostream>
-using namespace std;
+#ifndef STATUS_H_
+#define STATUS_H_
+#include "Utils.h"
+
 namespace sdds
 {
-    class Status
+
+    class Status : public Utils
     {
-        char *Desc;
-        int Code;
+        char *desc{};
+        int code;
+        void setEmpty();
 
     public:
         Status();
-        Status(const char *desc);
-        Status(const Status &);
-        Status &operator=(const char *);
-        Status &operator=(int);
+        Status(const char *desc, int code = 0);
+        void set(const char *desc, int code);
+        Status(const Status &s);
+        Status &operator=(const Status &s);
+        Status &operator=(int code);
+        Status &operator=(const char *desc);
         operator int() const;
-        operator bool() const;
         operator const char *() const;
+        operator bool() const;
         Status &clear();
-        friend ostream &operator<<(ostream &, const Status &);
         ~Status();
     };
-    extern Status sts;
+
+    std::ostream &operator<<(std::ostream &ostr, const Status &s);
+
 }
 
-#endif
+#endif // !STATUS_H_

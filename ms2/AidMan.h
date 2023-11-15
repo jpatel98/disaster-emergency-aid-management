@@ -9,23 +9,30 @@ Date of completion      : 10 November 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
 
-#ifndef AIDMAN_H
-#define AIDMAN_H
+#ifndef AIDMAN_H_
+#define AIDMAN_H_
 #include "Menu.h"
+
 namespace sdds
 {
     class AidMan : public Menu
     {
-        char *m_filename;
+        // file name -> Dynamically holding the name of a data file holding the aidand product information.
+        // main menu -> A Menu object.
+        char *fileName{};
+        Menu m;
         unsigned int menu();
 
     public:
         AidMan();
+        AidMan(std::nullptr_t);
+        AidMan(const AidMan &a);
+        AidMan(const char *fileName);
+        void set(const char *fileName);
+        AidMan &operator=(const AidMan &a);
         ~AidMan();
-        AidMan(const char* filename);
         void run();
     };
 
 }
-
-#endif
+#endif // !AIDMAN_H_
