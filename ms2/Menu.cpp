@@ -10,6 +10,7 @@ I have done all the coding by myself and only copied the code that my professor 
 ******************************************************************************/
 
 #include <iostream>
+#include <cstring>
 #include "Utils.h"
 #include "Menu.h"
 
@@ -29,6 +30,11 @@ namespace sdds
         this->menuContent = nullptr;
     }
 
+    const char *Menu::getMenuContent() const
+    {
+        return menuContent;
+    }
+
     Menu::Menu()
     {
         setEmpty();
@@ -37,13 +43,15 @@ namespace sdds
     Menu::Menu(const char *menuContent)
     {
         setEmpty();
-        this->set(menuContent, 7); // Assuming 7 is the number of options
+        if (menuContent != nullptr && strlen(menuContent) <= (unsigned)max_options)
+            this->set(menuContent, 15);
     }
 
     Menu::Menu(const char *menuContent, unsigned int option)
     {
         setEmpty();
-        this->set(menuContent, option);
+        if (menuContent && strlen(menuContent) <= (unsigned)max_options)
+            this->set(menuContent, option);
     }
 
     void Menu::set(const char *menuContent, unsigned int option)
@@ -62,6 +70,11 @@ namespace sdds
     Menu::Menu(const Menu &m)
     {
         this->set(m.menuContent, m.option);
+    }
+
+    Menu::operator bool()
+    {
+        return menuContent != nullptr;
     }
 
     Menu &Menu::operator=(const Menu &m)
@@ -94,12 +107,17 @@ namespace sdds
     unsigned int Menu::run()
     {
         int option;
+        if (*this)
+        {
+            cout << this->menuContent << endl;
+            option = Utils::getint(0, this->option, "> ");
+        }
+        else
+        {
+            cout << "Invalid Menu!" << endl;
+            option = 0;
+        }
 
-        cout << this->menuContent;
-        cout << "0- Exit" << endl;
-        cout << "> ";
-
-        option = Utils::getint(0, this->option, "menutest", NULL);
         return option;
     }
 }

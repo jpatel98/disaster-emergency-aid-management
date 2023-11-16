@@ -12,7 +12,6 @@ I have done all the coding by myself and only copied the code that my professor 
 #include <ctime>
 #include <cstring>
 #include "Utils.h"
-
 using namespace std;
 namespace sdds
 {
@@ -20,6 +19,77 @@ namespace sdds
    void Utils::testMode(bool testmode)
    {
       m_testMode = testmode;
+   }
+   void Utils::alocpy(char *&destination, const char *source)
+   {
+      if (destination != nullptr)
+      {
+         delete[] destination;
+      }
+      if (source != nullptr)
+      {
+         destination = new char[strlen(source) + 1];
+         strcpy(destination, source);
+      }
+      else
+      {
+         destination = nullptr;
+      }
+   }
+   int Utils::getint(const char *prompt)
+   {
+      int num;
+
+      if (prompt != nullptr)
+      {
+         cout << prompt;
+      }
+
+      while (true)
+      {
+         cin >> num;
+         if (cin.fail())
+         {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid Integer, retry: ";
+         }
+         else
+         {
+            break;
+         }
+      }
+      return num;
+   }
+   int Utils::getint(int min, int max, const char *prompt, const char *errMes)
+   {
+
+      int num;
+
+      if (prompt != nullptr)
+      {
+         cout << prompt;
+      }
+      while (true)
+      {
+         num = getint();
+         if (num < min || num > max)
+         {
+            if (errMes != nullptr)
+            {
+               cout << errMes << ", retry: ";
+            }
+            else
+            {
+               cout << "Value out of range [" << min << "<=val<=" << max << "]: ";
+            }
+         }
+         else
+         {
+            break;
+         }
+      }
+      return num;
    }
    void Utils::getSystemDate(int *year, int *mon, int *day)
    {
@@ -49,62 +119,6 @@ namespace sdds
       int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, -1};
       int mon = (month >= 1 && month <= 12 ? month : 13) - 1;
       return days[mon] + int((mon == 1) * ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
-   }
-
-   void Utils::alocpy(char *&destination, const char *source)
-   {
-      if (source != nullptr)
-      {
-         destination = new char[strlen(source) + 1];
-         strcpy(destination, source);
-      }
-      else
-      {
-         delete[] destination;
-         destination = nullptr;
-      }
-   }
-
-   int Utils::getint(const char *prompt)
-   {
-      int enter = -1;
-
-      if (prompt != nullptr)
-      {
-         while (!(cin >> enter))
-         {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "Invalid Integer, retry: ";
-         }
-      }
-      return enter;
-   }
-
-   int Utils::getint(int min, int max, const char *prompt, const char *errMes)
-   {
-      int enter = -1;
-      bool flag = 0;
-
-      if (prompt != nullptr)
-      {
-         do
-         {
-            flag = 0;
-            enter = getint(prompt);
-            if (enter < min || enter > max)
-            {
-               if (errMes != nullptr && !enter)
-               {
-                  cout << ", retry: ";
-               }
-               else
-                  cout << "Value out of range [" << min << "<=val<=" << max << "]: ";
-               flag = 1;
-            }
-         } while (flag);
-      }
-      return enter;
    }
 
 }

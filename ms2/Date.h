@@ -8,47 +8,41 @@ Date of completion      : 31 October 2023
 
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
-
-#ifndef DATE_H_
-#define DATE_H_
+#ifndef SDDS_DATE_H
+#define SDDS_DATE_H
+#include <iostream>
 #include "Status.h"
-
 namespace sdds
 {
-    class Date : public Status
+    const int max_year = 2030;
+    class Date
     {
-        const int max_year = 2030;
-        int year;
-        int month;
-        int day;
-        bool isFormat;
-        Status s;
+        int m_year{};
+        int m_mon{};
+        int m_day{};
+        bool m_formatted{};
+        Status m_state{};
         bool validate();
-        int uniqueDate();
 
     public:
+        int uniqueDateVal() const;
         Date();
-        Date(int year, int month, int day);
-        void set(int year, int month, int day);
-        Date(const Date &date);
-        Date &operator=(const Date &date);
-        ~Date();
-        bool operator==(Date &date);
-        bool operator!=(Date &date);
-        bool operator<(Date &date);
-        bool operator>(Date &date);
-        bool operator<=(Date &date);
-        bool operator>=(Date &date);
-        const Date::Status &state();
-        Date &formatted(bool flag);
-        operator bool() const;
-        std::ostream &write(std::ostream &ostr) const;
-        std::istream &read(std::istream &istr);
+        Date(int year, int mon, int day);
+        //Overload all the six comparison operators: ==, !=, <, >, <=, >=
+        //Use the private method, unique date value for the comparison.
+        bool operator==(const Date &D) const;
+        bool operator!=(const Date &D) const;
+        bool operator<(const Date &D) const;
+        bool operator>(const Date &D) const;
+        bool operator<=(const Date &D) const;
+        bool operator>=(const Date &D) const;
+        const Status &state() const;
+        Date &formatted(bool value);
+        std::ostream &write(std::ostream &os) const;
+        std::istream &read(std::istream &is);
     };
-
-    std::istream &operator>>(std::istream &istr, Date &date);
-    std::ostream &operator<<(std::ostream &ostr, const Date &date);
-
+    std::ostream &operator<<(std::ostream &os, const Date &D);
+    std::istream &operator>>(std::istream &is, Date &D);
 }
 
-#endif // !DATE_H_
+#endif // !SDDS_DATE_H

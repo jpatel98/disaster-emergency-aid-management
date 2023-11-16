@@ -8,121 +8,79 @@ Date of completion      : 1 November 2023
 
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
-
 #include <iostream>
+#include <cstring>
+#include <fstream>
+#include "Utils.h"
 #include "Status.h"
-
-using namespace std;
 
 namespace sdds
 {
-
-    void Status::setEmpty()
+    //Utils ut;
+    Status::Status(const char *desc)
     {
-        this->desc = nullptr;
-        this->code = 0;
-    }
-
-    Status::Status()
-    {
-        setEmpty();
-    }
-
-    Status::Status(const char *desc, int code)
-    {
-        if (desc != nullptr)
+        if (desc)
         {
-            this->setEmpty();
-            this->set(desc, code);
+            ut.alocpy(m_desc, desc);
         }
-        else
-            setEmpty();
+        m_code = 0;
     }
-
-    void Status::set(const char *desc, int code)
+    Status::Status(const Status &stat)
     {
-        delete[] this->desc;
-
-        if (desc != nullptr)
+        *this = stat;
+    }
+    Status &Status::operator=(const Status &stat)
+    {
+        if (this != &stat)
         {
-            Utils::alocpy(this->desc, desc);
-            this->code = code;
+            m_code = stat.m_code;
+            ut.alocpy(m_desc, stat.m_desc);
         }
-        else
-            setEmpty();
-    }
-
-    Status::Status(const Status &s)
-    {
-        this->setEmpty();
-        this->set(s.desc, s.code);
-    }
-
-    Status &Status::operator=(const Status &s)
-    {
-        if (&s != this)
-            this->set(s.desc, s.code);
         return *this;
     }
-
     Status::~Status()
     {
-        delete[] this->desc;
-        this->desc = nullptr;
+        delete[] m_desc;
     }
-
-    Status &Status::operator=(int code)
-    {
-        this->code = code;
-        return *this;
-    }
-
     Status &Status::operator=(const char *desc)
     {
-        delete[] this->desc;
-        Utils::alocpy(this->desc, desc);
+        ut.alocpy(m_desc, desc);
         return *this;
     }
-
+    Status &Status::operator=(int code)
+    {
+        m_code = code;
+        return *this;
+    }
     Status::operator int() const
     {
-        return this->code;
+        return m_code;
     }
-
     Status::operator const char *() const
     {
-        return this->desc;
+        return m_desc;
     }
-
     Status::operator bool() const
     {
-        return (this->desc == nullptr) ? true : false;
+        return m_desc == nullptr;
     }
-
     Status &Status::clear()
     {
-        delete[] this->desc;
-        this->desc = nullptr;
-        this->code = 0;
-
+        delete[] m_desc;
+        m_desc = nullptr;
+        m_code = 0;
         return *this;
     }
-
-    // Overload the insertion operator to be able to print a Status object using ostream.
-    // This operator overload should print the Status only if it is in an invalid state.
-    // When printing the status object the code is printed only if it is not zero as follows `"ERR# ? ? ? : " where ??? replaced with the code.
-    // Then the description of the Status object is printed.
-    ostream &operator<<(std::ostream &ostr, const Status &s)
+    std::ostream &operator<<(std::ostream &os, const Status &stat)
     {
-        int code = s.operator int();
-
-        if (!s)
+        if (!stat)
         {
-            if (code != 0)
-                ostr << "ERR#" << code << ": ";
-            ostr << s.operator const char *();
+            if (stat.operator int() != 0)
+            {
+                os << "ERR#" << stat.operator int() << ": ";
+            }
+            os << stat.operator const char *();
         }
-        return ostr;
+        return os;
     }
-
 }

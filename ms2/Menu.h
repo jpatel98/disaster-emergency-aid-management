@@ -9,8 +9,8 @@ Date of completion      : 12 November 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
 
-#ifndef MENU_H_
-#define MENU_H_
+#ifndef SDDS_MENU_H
+#define SDDS_MENU_H
 #include "Utils.h"
 
 namespace sdds
@@ -26,14 +26,12 @@ namespace sdds
 		void dellocate();
 
 	public:
-		const char *getMenuContent() const
-		{
-			return menuContent;
-		}
+		const char *getMenuContent() const;
 		Menu();
 		Menu(const char *menuContent);
 		Menu(const char *menuContent, unsigned int option);
 		Menu(const Menu &m);
+		operator bool();
 		void set(const char *menuContent, unsigned int option);
 		Menu &operator=(const Menu &m);
 		Menu &operator=(int option);

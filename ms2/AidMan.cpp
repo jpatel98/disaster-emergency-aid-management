@@ -8,7 +8,6 @@ Date of completion      : 10 November 2023
 
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
-
 #include <iostream>
 #include <cstring>
 #include "Date.h"
@@ -20,7 +19,7 @@ namespace sdds
 
     AidMan::AidMan()
     {
-        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
+        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n0- Exit";
         m = 7;
         Menu::set(m.getMenuContent(), 7);
         fileName = nullptr;
@@ -28,7 +27,7 @@ namespace sdds
 
     AidMan::AidMan(std::nullptr_t)
     {
-        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
+        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n0- Exit";
         m = 7;
         Menu::set(m.getMenuContent(), 7);
         fileName = nullptr;
@@ -36,41 +35,23 @@ namespace sdds
 
     AidMan::AidMan(const char *fileName)
     {
-        this->fileName = new char[strlen(fileName) + 1];
-        strcpy(this->fileName, fileName);
-        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
-        m = 7;
-        Menu::set(m.getMenuContent(), 7);
+        set(fileName);
     }
 
     void AidMan::set(const char *fileName)
     {
-        delete[] this->fileName;
-        Utils::alocpy(this->fileName, fileName);
-        m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n";
-        m = 7;
-        Menu::set(m.getMenuContent(), 7);
-    }
-
-    AidMan::AidMan(const AidMan &a)
-    {
         if (fileName != nullptr)
         {
-            this->set(a.fileName);
+            delete[] this->fileName;
+            Utils::alocpy(this->fileName, fileName);
+            m = "1- List Items\n2- Add Item\n3- Remove Item\n4- Update Quantity\n5- Sort\n6- Ship Items\n7- New/Open Aid Database\n---------------------------------\n0- Exit";
+            m = 7;
+            Menu::set(m.getMenuContent(), 7);
         }
         else
-            this->fileName = nullptr;
-    }
-
-    AidMan &AidMan::operator=(const AidMan &a)
-    {
-        if (this != &a)
         {
-            this->set(a.fileName);
+            Menu::set(nullptr, 0);
         }
-        else
-            this->fileName = nullptr;
-        return *this;
     }
 
     AidMan::~AidMan()
@@ -94,7 +75,7 @@ namespace sdds
         {
             cout << "Data file: " << fileName << endl;
         }
-        cout << "---------------------------------" << endl;
+        cout << "\n";
         option = Menu::run();
 
         return option;
@@ -111,7 +92,7 @@ namespace sdds
             switch (option)
             {
             case 0:
-                cout << "Exiting Program!" << endl;
+                cout << "Exiting Program!";
                 break;
             case 1:
                 cout << endl;

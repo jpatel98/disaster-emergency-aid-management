@@ -9,8 +9,8 @@ Date of completion      : 10 November 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
 
-#ifndef AIDMAN_H_
-#define AIDMAN_H_
+#ifndef SDDS_AIDMAN_H
+#define SDDS_AIDMAN_H
 #include "Menu.h"
 
 namespace sdds
@@ -24,10 +24,10 @@ namespace sdds
     public:
         AidMan();
         AidMan(std::nullptr_t);
-        AidMan(const AidMan &a);
+        AidMan(const AidMan &a) = delete;
         AidMan(const char *fileName);
         void set(const char *fileName);
-        AidMan &operator=(const AidMan &a);
+        AidMan &operator=(const AidMan &a) = delete;
         ~AidMan();
         void run();
     };
