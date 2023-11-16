@@ -40,7 +40,6 @@ namespace sdds
         this->set(menuContent, 7); // Assuming 7 is the number of options
     }
 
-    // A Menu is created using an unsigned integerand a CString.The unsigned integer is used to initialize the number of optionsand a dynamic copy of the CString is held in the menu content.The maximum number of options is 15, if the number of options is more than 15 or if the CString is null, then the menu is rendered invalid.
     Menu::Menu(const char *menuContent, unsigned int option)
     {
         setEmpty();
@@ -60,8 +59,6 @@ namespace sdds
             setEmpty();
     }
 
-    // Rule of three
-    // A Menu cannot be copied or assigned to another Menu.When going out of scope the menu content is deallocated to prevent a memory leak.
     Menu::Menu(const Menu &m)
     {
         this->set(m.menuContent, m.option);
@@ -94,10 +91,6 @@ namespace sdds
         return *this;
     }
 
-    // This method receives nothingand returns an unsigned integerand will not change the state of the Menu object.
-    // The run method will first display the menu contentand then prints "0- Exit" and goes to newline.Then it will display "> " as a prompt and waits for the user to enter an integer between 0 and the number of options.This integer entry is foolproof.The user can not exit this stage unless a valid integer number with a valid value is entered.
-    // If the user enters a non - integer value the error message should be : "Invalid Integer, retry: ".
-    // If the user enters an invalid integer then the error message should be : "Value out of range [0<=val<=X]: ".Where X is the number of options.
     unsigned int Menu::run()
     {
         int option;

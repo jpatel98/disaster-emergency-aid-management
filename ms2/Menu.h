@@ -19,9 +19,6 @@ namespace sdds
 	class Menu : public Utils
 	{
 		const int max_options = 15;
-
-		// A dynamically allocated text that contains the list of options the user can select from.
-		// An unsigned integer that holds the number of available options.
 		char *menuContent;
 		unsigned int option;
 

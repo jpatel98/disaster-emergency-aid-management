@@ -53,11 +53,6 @@ namespace sdds
 
    void Utils::alocpy(char *&destination, const char *source)
    {
-      /*Safely allocates memory in destinationand copies the source into it.
-      deletes the destination dynamic arrayand sets it to null
-      if the source is not null
-      Allocates memory in the destination to the size of the sourceand copies the source into it.*/
-
       if (source != nullptr)
       {
          destination = new char[strlen(source) + 1];
@@ -70,8 +65,6 @@ namespace sdds
       }
    }
 
-   /*If the prompt is not null, it will display it.Then it performs a foolproof entry of an integer.
-   If the user enters an invalid integer it will display "Invalid Integer, retry: " and will not let the user leave the function until a valid integer is entered.*/
    int Utils::getint(const char *prompt)
    {
       int enter = -1;
@@ -88,10 +81,6 @@ namespace sdds
       return enter;
    }
 
-   /*If the prompt is not null it will be displayed before getting a valid integer.(reuse the previous getint())
-    If the entered integer is not within the acceptable range(minand max) then an error message is displayedand it will not let the user leave the function until an acceptable value is entered.
-    When printing the error message,
-    if the errMes argument is not null it will be displayed followed by ", retry: " otherwise the general error message "Value out of range [min<=val<=max]: " is displayed(replacing min and max with their values)*/
    int Utils::getint(int min, int max, const char *prompt, const char *errMes)
    {
       int enter = -1;

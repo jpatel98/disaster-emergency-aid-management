@@ -23,10 +23,6 @@ namespace sdds
         this->code = 0;
     }
 
-    /*A Status object can be constructed with or without a CString as a description.
-    If the description is provided, a dynamic copy of it will be kept in the class description.
-    If the description is not provided, the class description will be set to null.
-    In both cases the Code will be zero.*/
     Status::Status()
     {
         setEmpty();
@@ -75,9 +71,6 @@ namespace sdds
         this->desc = nullptr;
     }
 
-    // Assignment operator overloads
-    // A Status object should be able to be assigned to an integer or a CString.
-    // The results of the assignments should set the code or the description dynamically(with no memory leak).
     Status &Status::operator=(int code)
     {
         this->code = code;
@@ -91,26 +84,21 @@ namespace sdds
         return *this;
     }
 
-    // Casting a Status object to an integer should return the code
     Status::operator int() const
     {
         return this->code;
     }
 
-    // Casting a Status object to a constant character pointer should return the description.
     Status::operator const char *() const
     {
         return this->desc;
     }
 
-    // Casting a Status object to a boolean should return true if the description is null and false if it is not.
-    // Which means if the Status has no description, the owner class is in a valid state. (No news is good news.)
     Status::operator bool() const
     {
         return (this->desc == nullptr) ? true : false;
     }
 
-    // Create a method called clear() that safely deallocates the descriptionand sets the code to zero.This method will return a reference to the current object at the end.
     Status &Status::clear()
     {
         delete[] this->desc;

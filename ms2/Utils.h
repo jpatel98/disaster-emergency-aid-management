@@ -12,9 +12,9 @@ I have done all the coding by myself and only copied the code that my professor 
 #define SDDS_UTILS_H
 namespace sdds
 {
-   const int sdds_testYear = 2022;
-   const int sdds_testMon = 03;
-   const int sdds_testDay = 31;
+   const int sdds_testYear = 2023;
+   const int sdds_testMon = 12;
+   const int sdds_testDay = 9;
    class Utils
    {
       bool m_testMode = false;

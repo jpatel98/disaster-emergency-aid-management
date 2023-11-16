@@ -17,8 +17,6 @@ namespace sdds
 {
     class AidMan : public Menu
     {
-        // file name -> Dynamically holding the name of a data file holding the aidand product information.
-        // main menu -> A Menu object.
         char *fileName{};
         Menu m;
         unsigned int menu();
