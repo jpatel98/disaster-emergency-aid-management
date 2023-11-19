@@ -16,13 +16,16 @@ I have done all the coding by myself and only copied the code that my professor 
 #include "Utils.h"
 
 using namespace std;
+
 namespace sdds
 {
    Utils ut;
+
    void Utils::testMode(bool testmode)
    {
       m_testMode = testmode;
    }
+
    void Utils::getSystemDate(int *year, int *mon, int *day)
    {
       if (m_testMode)
@@ -46,6 +49,7 @@ namespace sdds
             *year = lt.tm_year + 1900;
       }
    }
+
    int Utils::daysOfMon(int month, int year) const
    {
       int days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, -1};
@@ -163,5 +167,4 @@ namespace sdds
          istr.setstate(ios::failbit);
       }
    }
-
 }

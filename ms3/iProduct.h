@@ -13,6 +13,7 @@ I have done all the coding by myself and only copied the code that my professor 
 #ifndef IPRODUCT_H
 #define IPRODUCT_H
 #include <iostream>
+
 namespace sdds
 {
 	class iProduct

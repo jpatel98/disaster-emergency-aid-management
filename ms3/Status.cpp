@@ -16,7 +16,6 @@ I have done all the coding by myself and only copied the code that my professor 
 
 namespace sdds
 {
-    //Utils ut;
     Status::Status(const char *desc)
     {
         if (desc)
@@ -25,10 +24,12 @@ namespace sdds
         }
         m_code = 0;
     }
+
     Status::Status(const Status &stat)
     {
         *this = stat;
     }
+
     Status &Status::operator=(const Status &stat)
     {
         if (this != &stat)
@@ -38,32 +39,39 @@ namespace sdds
         }
         return *this;
     }
+
     Status::~Status()
     {
         delete[] m_desc;
     }
+
     Status &Status::operator=(const char *desc)
     {
         ut.alocpy(m_desc, desc);
         return *this;
     }
+
     Status &Status::operator=(int code)
     {
         m_code = code;
         return *this;
     }
+
     Status::operator int() const
     {
         return m_code;
     }
+
     Status::operator const char *() const
     {
         return m_desc;
     }
+
     Status::operator bool() const
     {
         return m_desc == nullptr;
     }
+
     Status &Status::clear()
     {
         delete[] m_desc;
@@ -71,6 +79,7 @@ namespace sdds
         m_code = 0;
         return *this;
     }
+
     std::ostream &operator<<(std::ostream &os, const Status &stat)
     {
         if (!stat)

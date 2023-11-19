@@ -11,6 +11,7 @@ I have done all the coding by myself and only copied the code that my professor 
 
 #ifndef SDDS_STATUS_H
 #define SDDS_STATUS_H
+
 namespace sdds
 {
     class Status

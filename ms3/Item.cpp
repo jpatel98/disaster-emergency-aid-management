@@ -16,6 +16,7 @@ I have done all the coding by myself and only copied the code that my professor 
 #include <fstream>
 
 using namespace std;
+
 namespace sdds
 {
 	Item::Item() : desc(nullptr)
@@ -28,41 +29,31 @@ namespace sdds
 		sku = 0;
 	}
 
-	//create a query called linear that returns the linear flag of the Item
 	bool Item::linear() const
 	{
 		return flag;
 	}
 
-	//Rule of three
-	//Rule of three is implemented to make sure there is no memory leak in case of copying, assignment or destruction.
 	Item::Item(const Item &i) : desc(nullptr)
 	{
-		//shallow copy
 		price = i.price;
 		hand_qua = i.hand_qua;
 		need_qua = i.need_qua;
 		flag = i.flag;
 
-		//dynamic allocation for description
 		delete[] desc;
 		ut.alocpy(desc, i.desc);
 	}
 
 	Item &Item::operator=(const Item &i)
 	{
-		// check for self-assignments
 		if (this != &i)
 		{
-			// shallow copy non-resource variables
 			price = i.price;
 			hand_qua = i.hand_qua;
 			need_qua = i.need_qua;
 			flag = i.flag;
-			// deallocate previously allocated dynamic memory
 			delete[] desc;
-			// allocate new dynamic memory, if needed
-			// deep copy
 			ut.alocpy(desc, i.desc);
 		}
 		else
@@ -77,43 +68,36 @@ namespace sdds
 		this->desc = nullptr;
 	}
 
-	//the qtyNeeded method returns the needed - quantity attribute
 	int Item::qtyNeeded() const
 	{
 		return need_qua;
 	}
 
-	//the qty method returns the on - hand quantity attribute
 	int Item::qty() const
 	{
 		return hand_qua;
 	}
 
-	//the double conversion operator overload returns the price
 	Item::operator double() const
 	{
 		return price;
 	}
 
-	//the boolean conversion operator overload returns the state of the object being good.
 	Item::operator bool() const
 	{
 		return flag;
 	}
 
-	// the operator-= reduces the on-hand quantity by the received value
 	int Item::operator-=(int qty)
 	{
 		return hand_qua -= qty;
 	}
 
-	// the operator+= increases the on-hand quantity by the received value
 	int Item::operator+=(int qty)
 	{
 		return hand_qua += qty;
 	}
 
-	//the linear modifier sets the linear flag attribute to true or false.
 	void Item::linear(bool isLinear)
 	{
 		flag = isLinear;
@@ -121,7 +105,6 @@ namespace sdds
 
 	Item &Item::clear()
 	{
-
 		delete[] this->desc;
 		desc = nullptr;
 		price = 0;
@@ -133,14 +116,11 @@ namespace sdds
 		return *this;
 	}
 
-	//the integer comparison returns true if the SKU attribute matches the received value
 	bool Item::operator==(int sku) const
 	{
 		return (this->sku == sku) ? true : false;
 	}
 
-	//the constant character pointer comparison searches in the description of the Item for the appearance of the received Cstring.
-	//If a match was found it returns true.If any of the descriptions(The Items or the received value) are null or the match is not found, it will return false.
 	bool Item::operator==(const char *description) const
 	{
 		char *match;
@@ -151,8 +131,6 @@ namespace sdds
 		return (match && this->desc != nullptr && description != nullptr) ? true : false;
 	}
 
-	//If the state of the Item is good, it will write SKU, description, on - hand quantity, needed quantityand price in tab - separated format.
-	//note that the price should be written with 2 digits after the decimal point.
 	ofstream &Item::save(ofstream &ofstr) const
 	{
 		if (desc)
@@ -162,7 +140,6 @@ namespace sdds
 		return ofstr;
 	}
 
-	//The tab - separated SKU, description, on-hand quantity, needed quantityand price are read into their corresponding attributes and then a single character is discarded from the file.
 	ifstream &Item::load(ifstream &ifstr)
 	{
 		char *indesc = new char[1000];
@@ -182,25 +159,20 @@ namespace sdds
 			ifstr >> price;
 			ut.extractChar(ifstr, '\n');
 
-			//If ifstream is in a bad state after the read the state of the item will be set to "Input file stream read failed!"
 			if (ifstr.bad())
 				s = "Input file stream read failed!";
 		}
 		else
 			ifstr.setstate(ios::badbit);
 
-		//ensure to delete any dynamic allocation
 		delete[] indesc;
 		indesc = nullptr;
 
 		return ifstr;
 	}
 
-	//If the state is bad, the state is printed instead.
-	//If the state is good the following will be done.
 	ostream &Item::display(ostream &ostr) const
 	{
-		//Note that if the description is too long only the first 35 characters will be printed
 		string str_desc = desc;
 		str_desc = str_desc.substr(0, 35);
 
@@ -228,11 +200,9 @@ namespace sdds
 		return ostr;
 	}
 
-	//read will first prompt the user with the title "AMA Item" and then displays the SKU and reads the rest of the information in a full - proof way(the same as SKU).
 	istream &Item::read(istream &istr)
 	{
 		char *indesc = new char[100];
-		//After deleting the descriptionand clearing the state.
 		delete[] desc;
 		desc = nullptr;
 		istr.clear();
@@ -264,7 +234,6 @@ namespace sdds
 		return istr;
 	}
 
-	//Reads the SKU from the screen with the prompt "SKU: ".It makes sure the SKU number begins with digits 4 to 9 and it is 5 digits long.
 	int Item::readSku(istream &istr)
 	{
 		cout << "SKU: ";

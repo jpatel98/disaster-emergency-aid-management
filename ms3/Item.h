@@ -51,7 +51,6 @@ namespace sdds
 		std::istream &read(std::istream &istr);
 		int readSku(std::istream &istr);
 	};
-
 }
 
 #endif // !ITEM_H_

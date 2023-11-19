@@ -14,6 +14,7 @@ I have done all the coding by myself and only copied the code that my professor 
 #include <cstring>
 
 using namespace std;
+
 namespace sdds
 {
 	istream &operator>>(istream &istr, iProduct &i)

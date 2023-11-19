@@ -14,59 +14,75 @@
 #include <fstream>
 using namespace std;
 #include "iProduct.h"
+
 using namespace sdds;
-class Product : public iProduct {
-   char* dyntest{};
+
+class Product : public iProduct
+{
+   char *dyntest{};
+
 public:
-   int readSku(std::istream& istr) {
+   int readSku(std::istream &istr)
+   {
       cout << "readSku" << endl;
       return 0;
    }
-   int operator-=(int qty) {
+   int operator-=(int qty)
+   {
       cout << "operator-=" << endl;
       return 0;
    }
-   int operator+=(int qty) {
+   int operator+=(int qty)
+   {
       cout << "operator+=" << endl;
       return 0;
    }
-   operator double()const {
+   operator double() const
+   {
       cout << "operator double" << endl;
       return 0.;
    }
-   operator bool()const {
+   operator bool() const
+   {
       cout << "operator bool" << endl;
       return false;
    }
-   int qtyNeeded()const {
+   int qtyNeeded() const
+   {
       cout << "qtyNeeded" << endl;
       return 0;
    }
-   int qty()const {
+   int qty() const
+   {
       cout << "qty" << endl;
       return 0;
    }
-   void linear(bool isLinear) {
+   void linear(bool isLinear)
+   {
       cout << "Linear" << endl;
    }
-   std::ofstream& save(std::ofstream& ofstr)const {
+   std::ofstream &save(std::ofstream &ofstr) const
+   {
       cout << "save" << endl;
       return ofstr;
    }
-   std::ifstream& load(std::ifstream& ifstr) {
+   std::ifstream &load(std::ifstream &ifstr)
+   {
       cout << "load" << endl;
       return ifstr;
    }
-   std::ostream& display(std::ostream& ostr)const {
+   std::ostream &display(std::ostream &ostr) const
+   {
       operator bool();
       operator double();
       qtyNeeded();
       qty();
       operator==("");
-      operator== (2);
+      operator==(2);
       return ostr;
    }
-   std::istream& read(std::istream& istr) {
+   std::istream &read(std::istream &istr)
+   {
       operator+=(1);
       operator-=(1);
       readSku(istr);
@@ -74,36 +90,42 @@ public:
       dyntest = new char[2345];
       return istr;
    }
-   bool operator==(int sku)const {
+   bool operator==(int sku) const
+   {
       cout << "operator==" << endl;
       return false;
    }
-   bool operator==(const char* desc)const {
+   bool operator==(const char *desc) const
+   {
       cout << "operator==(cosnt char*)" << endl;
       return false;
    }
-   ~Product() {
+   ~Product()
+   {
       delete[] dyntest;
    }
 };
 
-int main() {
-   cout << "Expected Output:" << endl <<
-           "----------------" << endl <<
-      "load\n"
-      "save\n"
-      "operator bool\n"
-      "operator double\n"
-      "qtyNeeded\n"
-      "qty\n"
-      "operator==(cosnt char*)\n"
-      "operator==\n"
-      "operator+=\n"
-      "operator-=\n"
-      "readSku\n"
-      "Linear\n"
-      << "----------------" << endl << "Your output:" << endl << "----------------" << endl;
-   iProduct* P = new Product;
+int main()
+{
+   cout << "Expected Output:" << endl
+        << "----------------" << endl
+        << "load\n"
+           "save\n"
+           "operator bool\n"
+           "operator double\n"
+           "qtyNeeded\n"
+           "qty\n"
+           "operator==(cosnt char*)\n"
+           "operator==\n"
+           "operator+=\n"
+           "operator-=\n"
+           "readSku\n"
+           "Linear\n"
+        << "----------------" << endl
+        << "Your output:" << endl
+        << "----------------" << endl;
+   iProduct *P = new Product;
    ifstream in("tst.txt");
    ofstream out("tst.txt");
    P->load(in);
