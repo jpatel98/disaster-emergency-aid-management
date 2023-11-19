@@ -9,23 +9,6 @@ Date of completion      : 1 November 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 ******************************************************************************/
 
-/* Citation and Sources...
-Final Project Milestone 3
-Module: Date
-Filename: Utils.cpp
-Version 1.0
-Author	Ching an shih
-Revision History
------------------------------------------------------------
-I have done all the coding by myself and only copied the code
-that my professor provided to complete my workshops and assignments.
------------------------------------------------------------
-OR
------------------------------------------------------------
-Write exactly which part of the code is given to you as help and
-who gave it to you, or from what source you acquired it.
------------------------------------------------------------*/
-
 #include <iostream>
 #include <ctime>
 #include <cstring>
@@ -170,7 +153,6 @@ namespace sdds
 
    void Utils::extractChar(istream &istr, char ch) const
    {
-
       if (istr.peek() == ch)
       {
          istr.ignore();
