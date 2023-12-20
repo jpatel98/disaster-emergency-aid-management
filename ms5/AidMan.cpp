@@ -382,7 +382,7 @@ namespace sdds
 		ut.getSystemDate(&year, &month, &day);
 		ofstream file;
 		file.open("shippingOrder.txt");
-		file << "Shipping Order, Date: " << year << "/0" << month << "/" << day << endl;
+		file << "Shipping Order, Date: " << year << "/" << month << "/0" << day << endl;
 		file << " ROW |  SKU  | Description                         | Have | Need |  Price  | Expiry" << endl;
 		file << "-----+-------+-------------------------------------+------+------+---------+-----------" << endl;
 		for (int i = 0; i < m_iProductItems; i++)
