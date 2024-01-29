@@ -16,7 +16,7 @@ g++ -Wall -std=c++11 -g -o manager AidMan.cpp Date.cpp iProduct.cpp Item.cpp mai
 - `-Wall`: the compiler will report all warnings
 - `-std=c++11`: the code will be compiled using the C++11 standard
 - `-g`: the executable file will contain debugging symbols, allowing *valgrind* to create better reports
-- `-o ws`: the compiled application will be named `ws`
+- `-o manager`: the compiled application will be named `manager`
 
 ## How it works
 
