@@ -10,7 +10,7 @@ This project manages the list of items needed to be shipped to the area. The app
 ## Compilation
 
 ```bash
-g++ -Wall -std=c++11 -g -o ws file1.cpp file2.cpp ...
+g++ -Wall -std=c++11 -g -o manager AidMan.cpp Date.cpp iProduct.cpp Item.cpp main.cpp Menu.cpp Perishable.cpp Status.cpp Utils.cpp
 ```
 
 - `-Wall`: the compiler will report all warnings
